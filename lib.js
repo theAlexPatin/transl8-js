@@ -46,7 +46,7 @@ const formatVars = (phrase, translated) => {
     }
     return translated
   } catch (error) {
-    logger.warning(error.message)
+    logger.warn(error.message)
     logger.error(error)
     return translated
   }

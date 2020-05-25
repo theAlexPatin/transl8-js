@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const transl8 = require('./lib')
+const path = require('path')
 
 const loadLocale = (file) => {
   if (file.endsWith('.json')) return JSON.parse(fs.readFileSync(file, 'utf8'))
@@ -10,10 +11,8 @@ const loadLocale = (file) => {
 
 const writeResults = (outdir, results) => {
   if (!fs.existsSync(outdir)) fs.mkdirSync(outdir)
-  outdir = outdir.endsWith('/') ? outdir : `${outdir}/`
-
   Object.entries(results).forEach(([locale, result]) =>
-    fs.writeFileSync(`${outdir}${locale}.json`, JSON.stringify(result, null, 2))
+    fs.writeFileSync(`${outdir}/${locale}.json`, JSON.stringify(result, null, 2))
   )
 }
 
@@ -54,8 +53,8 @@ const args = require('yargs')
 
 transl8({
   key: args.key,
-  source: loadLocale(args.infile),
+  source: loadLocale(path.resolve(process.cwd(), args.infile)),
   locales: args.locales,
 }).then((results) => {
-  writeResults(args.outdir, results)
+  writeResults(path.resolve(process.cwd(), args.outdir), results)
 })

@@ -1,6 +1,6 @@
 {
   "name": "transl8",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Translates locale files into multiple languages using Google's Cloud Translation API",
   "main": "lib.js",
   "author": "Alex Patin",
