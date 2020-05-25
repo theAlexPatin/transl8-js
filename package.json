@@ -1,0 +1,40 @@
+{
+  "name": "transl8",
+  "version": "0.1.0",
+  "description": "Translates locale files into multiple languages using Google's Cloud Translation API",
+  "main": "lib.js",
+  "author": "Alex Patin",
+  "license": "MIT",
+  "scripts": {
+    "lint": "./node_modules/eslint/bin/eslint.js lib.js bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/theAlexPatin/transl8.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theAlexPatin/transl8/issues"
+  },
+  "homepage": "https://github.com/theAlexPatin/transl8",
+  "bin": {
+    "transl8": "./bin.js"
+  },
+  "engines": {
+    "node": ">=4.3"
+  },
+  "dependencies": {
+    "google-translate": "^3.0.0",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "prettier": "^2.0.5"
+  }
+}
