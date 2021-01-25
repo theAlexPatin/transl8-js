@@ -1,4 +1,4 @@
-# transl8 [![](https://badge.fury.io/js/transl8.svg)](https://npmjs.org/package/transl8) [![](https://www.travis-ci.com/theAlexPatin/eslint-config-thealexpatin.svg?branch=master)](https://travis-ci.com/theAlexPatin/eslint-config-thealexpatin)
+# transl8-js [![](https://badge.fury.io/js/transl8.svg)](https://npmjs.org/package/transl8) [![](https://www.travis-ci.com/theAlexPatin/eslint-config-thealexpatin.svg?branch=master)](https://travis-ci.com/theAlexPatin/eslint-config-thealexpatin)
 
 Instantly translates your locale files into multiple languages using [Google's Cloud Translation API](https://developers.google.com/apis-explorer/#p/translate/v3/).
 
