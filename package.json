@@ -6,7 +6,7 @@
   "author": "Alex Patin",
   "license": "MIT",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint lib.js bin.js",
+    "lint": "./node_modules/.bin/eslint --fix .",
     "pub": "npm version patch --force && npm publish"
   },
   "repository": {
