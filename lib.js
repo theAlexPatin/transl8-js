@@ -2,24 +2,24 @@ let Translator
 let VERBOSITY
 
 const logger = {
-  warn(...args) {
-    if (VERBOSITY < 1) return
+  error(...args) {
+    if (VERBOSITY < 3) return
     // eslint-disable-next-line no-console
-    console.warn('[Warning]', ...args)
+    console.log('[Error]', ...args)
   },
   info(...args) {
     if (VERBOSITY < 2) return
     // eslint-disable-next-line no-console
     console.log('[Info]', ...args)
   },
-  error(...args) {
-    if (VERBOSITY < 3) return
+  warn(...args) {
+    if (VERBOSITY < 1) return
     // eslint-disable-next-line no-console
-    console.log('[Error]', ...args)
+    console.warn('[Warning]', ...args)
   },
 }
 
-const cleanCharacters = (dirtyString) =>
+const cleanCharacters = dirtyString =>
   [/'/gi, /"/gi, /\)/gi, /\r/gi, /\n/gi, /()/gi].reduce(
     (cleanString, regex) => cleanString.replace(regex, ''),
     dirtyString
@@ -58,8 +58,8 @@ const translatePhrase = async (phrase, locale) =>
     (
       await Promise.all(
         phrase.split('|').map(
-          (part) =>
-            new Promise((resolve) => {
+          part =>
+            new Promise(resolve => {
               Translator.translate(part, locale, (error, translation) => {
                 if (error) {
                   logger.warn(error.message)
@@ -67,7 +67,8 @@ const translatePhrase = async (phrase, locale) =>
                   return resolve(phrase)
                 }
 
-                if (!translation || !translation.translatedText) return resolve(phrase)
+                if (!translation || !translation.translatedText)
+                  return resolve(phrase)
                 return resolve(cleanCharacters(translation.translatedText))
               })
             })
@@ -91,20 +92,25 @@ const translateObject = async (object, locale) => {
         promise: translatePhrase(value, locale),
       })
   }
-  const results = await Promise.all(translations.map((t) => t.promise))
+  const results = await Promise.all(translations.map(t => t.promise))
   return results.reduce(
     (acc, result, i) => Object.assign(acc, { [translations[i].key]: result }),
     {}
   )
 }
 
-module.exports = async (params) => {
+module.exports = async params => {
   try {
     const { key, source, locales } = params
     if (!key || !source || !locales) throw new Error('Missing Arguments')
     Translator = require('google-translate')(key)
-    const results = await Promise.all(locales.map((locale) => translateObject(source, locale)))
-    return results.reduce((acc, result, i) => Object.assign(acc, { [locales[i]]: result }), {})
+    const results = await Promise.all(
+      locales.map(locale => translateObject(source, locale))
+    )
+    return results.reduce(
+      (acc, result, i) => Object.assign(acc, { [locales[i]]: result }),
+      {}
+    )
   } catch (error) {
     logger.warn(error.message)
     logger.error(error)

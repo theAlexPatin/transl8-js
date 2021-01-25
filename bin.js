@@ -1,9 +1,12 @@
 #!/usr/bin/env node
+const yargs = require('yargs')
+
 const fs = require('fs')
-const transl8 = require('./lib')
 const path = require('path')
 
-const loadLocale = (file) => {
+const transl8 = require('./lib')
+
+const loadLocale = file => {
   if (file.endsWith('.json')) return JSON.parse(fs.readFileSync(file, 'utf8'))
   else if (file.endsWith('.js')) return require(file)
   throw new Error('Unsupported input file format')
@@ -12,35 +15,38 @@ const loadLocale = (file) => {
 const writeResults = (outdir, results) => {
   if (!fs.existsSync(outdir)) fs.mkdirSync(outdir)
   Object.entries(results).forEach(([locale, result]) =>
-    fs.writeFileSync(`${outdir}/${locale}.json`, JSON.stringify(result, null, 2))
+    fs.writeFileSync(
+      `${outdir}/${locale}.json`,
+      JSON.stringify(result, null, 2)
+    )
   )
 }
 
-const args = require('yargs')
+const args = yargs
   .options({
-    key: {
-      alias: 'k',
-      describe: 'Google Cloud API Key',
-      demandOption: true,
-      type: 'string',
-    },
     infile: {
       alias: 'in',
-      describe: 'Source locale file (.js or .json)',
       demandOption: true,
+      describe: 'Source locale file (.js or .json)',
       type: 'string',
     },
-    outdir: {
-      alias: 'o',
-      describe: 'Output directory',
-      default: 'output',
+    key: {
+      alias: 'k',
+      demandOption: true,
+      describe: 'Google Cloud API Key',
       type: 'string',
     },
     locales: {
       alias: 'l',
+      demandOption: true,
       describe: 'List of target locales ',
       type: 'array',
-      demandOption: true,
+    },
+    outdir: {
+      alias: 'o',
+      default: 'output',
+      describe: 'Output directory',
+      type: 'string',
     },
     verbose: {
       alias: 'v',
@@ -53,8 +59,8 @@ const args = require('yargs')
 
 transl8({
   key: args.key,
-  source: loadLocale(path.resolve(process.cwd(), args.infile)),
   locales: args.locales,
-}).then((results) => {
+  source: loadLocale(path.resolve(process.cwd(), args.infile)),
+}).then(results => {
   writeResults(path.resolve(process.cwd(), args.outdir), results)
 })

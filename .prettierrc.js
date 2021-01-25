@@ -1,5 +1,1 @@
-module.exports = {
-	printWidth: 100,
-	semi: false,
-	singleQuote: true,
-}
+module.exports = require('prettier-config-thealexpatin')
