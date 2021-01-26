@@ -1,6 +1,6 @@
 {
   "name": "transl8",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Translates locale files into multiple languages using Google's Cloud Translation API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/theAlexPatin/transl8-js",
   "bin": {
-    "transl8": "./dist/bin.js"
+    "transl8": "dist/bin.js"
   },
   "engines": {
     "node": ">=10"
