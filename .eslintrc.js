@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['thealexpatin'],
+  extends: ['thealexpatin/typescript'],
 }

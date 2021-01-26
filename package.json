@@ -1,36 +1,51 @@
 {
   "name": "transl8",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Translates locale files into multiple languages using Google's Cloud Translation API",
-  "main": "lib.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Alex Patin",
   "license": "MIT",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --fix .",
-    "pub": "npm version patch --force && npm publish"
+    "build": "./node_modules/.bin/tsc",
+    "lint": "eslint --fix .",
+    "pub": "npm run lint && npm run build && npm version patch --force && npm publish"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/theAlexPatin/transl8.git"
+    "url": "git+ssh://git@github.com/theAlexPatin/transl8-js.git"
   },
   "bugs": {
-    "url": "https://github.com/theAlexPatin/transl8/issues"
+    "url": "https://github.com/theAlexPatin/transl8-js/issues"
   },
-  "homepage": "https://github.com/theAlexPatin/transl8",
+  "homepage": "https://github.com/theAlexPatin/transl8-js",
   "bin": {
-    "transl8": "./bin.js"
+    "transl8": "./dist/bin.js"
   },
   "engines": {
-    "node": ">=4.3"
+    "node": ">=10"
   },
   "dependencies": {
+    "@types/node": "^14.14.22",
+    "@types/yargs": "^15.0.12",
     "google-translate": "^3.0.0",
-    "yargs": "^15.3.1"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.18.0",
-    "eslint-config-thealexpatin": "^0.1.3",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-config-thealexpatin": "^0.1.8",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsdoc": "^31.3.3",
+    "eslint-plugin-only-error": "^1.0.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-sort-keys-fix": "^1.1.1",
     "prettier": "^2.2.1",
-    "prettier-config-thealexpatin": "^0.1.1"
+    "prettier-config-thealexpatin": "^0.1.1",
+    "typescript": "^4.1.3"
   }
 }

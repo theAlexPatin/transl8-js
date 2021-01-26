@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2020", "es7", "es6", "dom"],
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["src/*"],
+      "~/*": ["./*"]
+    },
+  },
+  "include": ["src", ".eslintrc.js", "decs.d.ts", "base.js"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

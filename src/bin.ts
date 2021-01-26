@@ -1,18 +1,19 @@
 #!/usr/bin/env node
-const yargs = require('yargs')
+import yargs from 'yargs'
 
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const transl8 = require('./lib')
+import transl8 from './lib'
+import { LocaleMap } from './types'
 
-const loadLocale = file => {
+const loadLocale = async (file: string): Promise<LocaleMap> => {
   if (file.endsWith('.json')) return JSON.parse(fs.readFileSync(file, 'utf8'))
-  else if (file.endsWith('.js')) return require(file)
+  if (file.endsWith('.js')) return await import(file)
   throw new Error('Unsupported input file format')
 }
 
-const writeResults = (outdir, results) => {
+const writeResults = (outdir: string, results: LocaleMap): void => {
   if (!fs.existsSync(outdir)) fs.mkdirSync(outdir)
   Object.entries(results).forEach(([locale, result]) =>
     fs.writeFileSync(
@@ -51,16 +52,25 @@ const args = yargs
     verbose: {
       alias: 'v',
       describe: '1 for warnings, 2 for info, 3 for errors',
-      type: 'counter',
+      type: 'count',
     },
   })
   .help('h')
   .alias('h', 'help').argv
 
-transl8({
-  key: args.key,
-  locales: args.locales,
-  source: loadLocale(path.resolve(process.cwd(), args.infile)),
-}).then(results => {
+const execute = async (): Promise<void> => {
+  const results = await transl8(
+    {
+      key: args.key,
+      locales: args.locales.map(locale => String(locale)),
+      source: await loadLocale(path.resolve(process.cwd(), args.infile)),
+    },
+    {
+      verbose: args.verbose,
+    }
+  )
+
   writeResults(path.resolve(process.cwd(), args.outdir), results)
-})
+}
+
+execute().finally(() => process.exit(1))
